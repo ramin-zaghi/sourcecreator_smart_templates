@@ -1,16 +1,88 @@
 /*< main_cpp local output="@{app_title}.c" >*//*
  * This source code was created using SOURCECREATOR(tm)
- * Please visit http://sourceCREATOR.io
- * An online version can be found at http://developer.visualSilicon.com
+ * Please visit http://bigclown.sourceCREATOR.io
  */
-#include <application.h>
 
+#include "application.h"
+
+#define SERVICE_INTERVAL_INTERVAL (60 * 60 * 1000)
+#define BATTERY_UPDATE_INTERVAL   (60 * 60 * 1000)
+
+#define UPDATE_SERVICE_INTERVAL            (5 * 1000)
+#define UPDATE_NORMAL_INTERVAL             (10 * 1000)
+
+/*< constants instanceregional />*/
+
+
+/*< params_struct instanceregional />*/
+
+/*< variables instanceregional />*/
+
+void battery_event_handler(bc_module_battery_event_t event, void *event_param)
+{
+    (void) event_param;
+
+    float voltage;
+
+    if (event == BC_MODULE_BATTERY_EVENT_UPDATE)
+    {
+        if (bc_module_battery_get_voltage(&voltage))
+        {
+            bc_radio_pub_battery(&voltage);
+        }
+    }
+}
+
+/*< handlers broadcast />*/
+
+void switch_to_normal_mode_task(void *param)
+{
+    /*< normal_mode instanceregional />*/
+
+    bc_scheduler_unregister(bc_scheduler_get_current_task_id());
+}
+
+void application_init(void)
+{
+    // Initialize radio
+    bc_radio_init(BC_RADIO_MODE_NODE_SLEEPING);
+
+    // Initialize battery
+    bc_module_battery_init();
+    bc_module_battery_set_event_handler(battery_event_handler, NULL);
+    bc_module_battery_set_update_interval(BATTERY_UPDATE_INTERVAL);
+
+    /*< early_inits broadcast />*/
+
+    /*< inits broadcast />*/
+
+    bc_radio_pairing_request("/*<@app_caption/>*/", VERSION);
+
+    bc_scheduler_register(switch_to_normal_mode_task, NULL, SERVICE_INTERVAL_INTERVAL);
+
+    /*< late_inits broadcast />*/
+}
 /*</ main_cpp >*/
 
 
 
-/*< main_h  local  output="@{app_title}.h" >*/#ifndef _/*< @ script code="return @app_title.ToUpper();" />*/_H
+/*< main_h  local  output="@{app_title}.h" >*//*
+ * This source code was created using SOURCECREATOR(tm)
+ * Please visit http://bigclown.sourceCREATOR.io
+ */
+
+
+#ifndef _/*< @ script code="return @app_title.ToUpper();" />*/_H
 #define _/*< @ script code="return @app_title.ToUpper();" />*/_H
+
+#ifndef VERSION
+#define VERSION "vdev"
+#endif
+
+#include <bcl.h>
+
+/*< header_content broadcast />*/
+
 #endif // _/*< @ script code="return @app_title.ToUpper();" />*/_H
 /*</ main_h >*/
 

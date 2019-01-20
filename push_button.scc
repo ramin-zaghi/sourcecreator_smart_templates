@@ -1,0 +1,44 @@
+
+
+/*<  variables instanceregional >*/
+
+// Button instance
+bc_button_t /*<@btn_name/>*/;
+uint16_t /*<@btn_name/>*/_event_count = 0;
+/*</ variables >*/
+
+
+
+/*<  button_comments instanceregional comment="This generates a new line of comment per button instance." >*/
+*  /*<@btn_name/>*/
+/*</ button_comments >*/
+
+
+
+/*<  handlers singleshot instanceregional >*/
+
+/* This function is used to handle events for the following buttons:
+ /*< button_comments broadcast />*/
+ */
+void button_event_handler(bc_button_t *self, bc_button_event_t event, void *event_param)
+{
+    (void) self;
+    (void) event_param;
+
+    if (event == BC_BUTTON_EVENT_PRESS)
+    {
+        bc_led_pulse(&led, 100);
+    }
+}
+/*</ handlers >*/
+
+
+
+/*<  inits instanceregional >*/
+
+// Initialize button "/*<@btn_name/>*/"
+bc_button_init(&/*<@btn_name/>*/, BC_GPIO_BUTTON, BC_GPIO_PULL_DOWN, false);
+bc_button_set_event_handler(&/*<@btn_name/>*/, button_event_handler, &/*<@btn_name/>*/_event_count);
+/*</ inits >*/
+
+

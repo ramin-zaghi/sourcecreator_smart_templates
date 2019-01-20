@@ -1,0 +1,58 @@
+
+
+/*< + params_struct instanceregional />*/
+/*< + climate_module_handler instanceregional />*/
+
+
+
+/*<  constants singleshot >*/
+
+#define BAROMETER_UPDATE_SERVICE_INTERVAL  (1 * 60 * 1000)
+#define BAROMETER_UPDATE_NORMAL_INTERVAL   (5 * 60 * 1000)
+
+#define BAROMETER_TAG_PUB_NO_CHANGE_INTEVAL (15 * 60 * 1000)
+#define BAROMETER_TAG_PUB_VALUE_CHANGE 20.0f
+/*</ constants >*/
+
+
+
+/*<  params_struct_members instanceregional >*/
+event_param_t /*<@bar_name/>*/;
+/*</ params_struct_members >*/
+
+
+
+/*< normal_mode singleshot instanceregional >*/
+bc_module_climate_set_update_interval_barometer(BAROMETER_UPDATE_NORMAL_INTERVAL);
+/*</ normal_mode >*/
+
+/*<  climate_module_init singleshot instanceregional >*/
+bc_module_climate_set_update_interval_barometer(BAROMETER_UPDATE_SERVICE_INTERVAL);
+/*</ climate_module_init >*/
+
+
+
+/*< climate_module_event_handler_case singleshot instanceregional >*/
+case BC_MODULE_CLIMATE_EVENT_UPDATE_BAROMETER:
+    if (bc_module_climate_get_pressure_pascal(&value))
+    {
+        /*< bar_event_handler_case_content broadcast />*/
+    }
+    break;
+/*</ climate_module_event_handler_case >*/
+
+/*< bar_event_handler_case_content instancelocal >*/
+if ((fabs(value - params./*<@bar_name/>*/.value) >= BAROMETER_TAG_PUB_VALUE_CHANGE) || (params./*<@bar_name/>*/.next_pub < bc_scheduler_get_spin_tick()))
+{
+    float meter;
+
+    if (!bc_module_climate_get_altitude_meter(&meter))
+    {
+        return;
+    }
+
+    bc_radio_pub_barometer(BC_RADIO_PUB_CHANNEL_R1_I2C0_ADDRESS_DEFAULT, &value, &meter);
+    params./*<@bar_name/>*/.value = value;
+    params./*<@bar_name/>*/.next_pub = bc_scheduler_get_spin_tick() + BAROMETER_TAG_PUB_NO_CHANGE_INTEVAL;
+}
+/*</ bar_event_handler_case_content >*/

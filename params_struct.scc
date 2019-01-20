@@ -1,0 +1,15 @@
+/*<  header_content singleshot >*/
+typedef struct
+{
+    uint8_t channel;
+    float value;
+    bc_tick_t next_pub;
+
+} event_param_t;
+/*</ header_content >*/
+/*<struct local singleshot>*/
+struct {
+    /*< params_struct_members broadcast />*/
+} params;
+/*</struct>*/
+/*<struct/>*/

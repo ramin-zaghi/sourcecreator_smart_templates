@@ -25,6 +25,164 @@
             "ParameterType": "TextBox"
           }
         ]
+      },
+      {
+        "categoryID": "285",
+        "parentID": "304",
+        "categoryName": "led",
+        "categoryDescription": "A light emitting device.",
+        "categoryDescription": "",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "led_name",
+            "ParameterName": "led_name",
+            "ParameterDefultValue": "LED0",
+            "ParameterValue": "",
+            "ParameterDescription": "Name for your LED",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "led_pulse",
+            "ParameterName": "led_pulse",
+            "ParameterDefultValue": "1000",
+            "ParameterValue": "1000",
+            "ParameterDescription": "How long to blink?",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "337",
+        "parentID": "304",
+        "categoryName": "push_button",
+        "categoryDescription": "A push button.",
+        "categoryDescription": "",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "btn_name",
+            "ParameterName": "btn_name",
+            "ParameterDefultValue": "Button0",
+            "ParameterValue": "",
+            "ParameterDescription": "Name Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "301",
+        "parentID": "304",
+        "categoryName": "barometer",
+        "categoryDescription": "A device used to meaasure the air pressure.",
+        "categoryDescription": "",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "bar_name",
+            "ParameterName": "bar_name",
+            "ParameterDefultValue": "Bar0",
+            "ParameterValue": "",
+            "ParameterDescription": "Name Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "297",
+        "parentID": "304",
+        "categoryName": "hygrometer",
+        "categoryDescription": "A hygrometer is used to the amount of humidity and water vapor in the air, soil or confined spaces.", 
+        "categoryDescription": "",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "hygro_name",
+            "ParameterName": "hygro_name",
+            "ParameterDefultValue": "Hygro0",
+            "ParameterValue": "",
+            "ParameterDescription": "Name Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "292",
+        "parentID": "304",
+        "categoryName": "luxmeter",
+        "categoryDescription": "A luxmeter can measure the amount of light.",
+        "categoryDescription": "",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "lux_name",
+            "ParameterName": "lux_name",
+            "ParameterDefultValue": "Lux0",
+            "ParameterValue": "",
+            "ParameterDescription": "Name Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "294",
+        "parentID": "304",
+        "categoryName": "temperature",
+        "categoryDescription": "Use this to measure the temperature.",
+        "categoryDescription": "",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "temp_name",
+            "ParameterName": "temp_name",
+            "ParameterDefultValue": "Temp0",
+            "ParameterValue": "",
+            "ParameterDescription": "Name Description",
+            "ParameterType": "TextBox"
+          }
+        ]
       }
     ]
-}
+  }

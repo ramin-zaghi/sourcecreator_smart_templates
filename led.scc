@@ -1,0 +1,26 @@
+
+
+/*<  variables instanceregional >*/
+
+// LED instance
+bc_led_t /*<@led_name/>*/;
+/*</ variables >*/
+
+
+
+/*<  inits instanceregional >*/
+
+// Initialize LED
+bc_led_init(&/*<@led_name/>*/, BC_GPIO_LED, false, false);
+bc_led_set_mode(&/*<@led_name/>*/, BC_LED_MODE_OFF);
+/*</ inits >*/
+
+
+
+/*<  late_inits instanceregional ?led_pulse >*/
+bc_led_pulse(&/*<@led_name/>*/, /*<@led_pulse/>*/);
+/*</ late_inits >*/
+
+/*<  late_inits instanceregional !led_pulse >*/
+bc_led_pulse(&/*<@led_name/>*/, 2000);
+/*</ late_inits >*/

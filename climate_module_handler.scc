@@ -1,0 +1,30 @@
+
+
+
+/*<  inits singleshot >*/
+
+// Initialize climate module
+bc_module_climate_init();
+bc_module_climate_set_event_handler(climate_module_event_handler, NULL);
+/*< climate_module_init broadcast />*/
+bc_module_climate_measure_all_sensors();
+/*</ inits >*/
+
+
+
+/*< handlers singleshot >*/
+
+void climate_module_event_handler(bc_module_climate_event_t event, void *event_param)
+{
+    (void) event_param;
+
+    float value;
+
+    switch (event)
+    {
+    /*< climate_module_event_handler_case broadcast />*/
+    default:
+        break;
+    }
+}
+/*</ handlers >*/
