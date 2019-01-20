@@ -1,0 +1,10 @@
+
+
+
+/*< + main_part instanceregional app_title="the_app_title" app_caption="the_app_caption" comment="This is an instance which forms the basis of an application." >*/
+/*</ main_part>*/
+
+
+
+/*< main_part comment="This line triggers code generation from the above main_part instance." />*/
+

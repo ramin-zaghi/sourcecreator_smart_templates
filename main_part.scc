@@ -1,0 +1,21 @@
+/*< main_cpp local output="@{app_title}.c" >*//*
+ * This source code was created using SOURCECREATOR(tm)
+ * Please visit http://sourceCREATOR.io
+ * An online version can be found at http://developer.visualSilicon.com
+ */
+#include <application.h>
+
+/*</ main_cpp >*/
+
+
+
+/*< main_h  local  output="@{app_title}.h" >*/#ifndef _/*< @ script code="return @app_title.ToUpper();" />*/_H
+#define _/*< @ script code="return @app_title.ToUpper();" />*/_H
+#endif // _/*< @ script code="return @app_title.ToUpper();" />*/_H
+/*</ main_h >*/
+
+
+
+/*< main_cpp app_title="application" app_caption="climate-monitor" comment="This is needed to trigger code generation from the local main_cpp block." />*/
+/*< main_h  app_title="application" comment="This is needed to trigger code generation from the local main_h block." />*/
+

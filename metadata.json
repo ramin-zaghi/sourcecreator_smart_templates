@@ -1,0 +1,30 @@
+{
+    "categoryName": "Toolbox",
+    "categories": [
+      {
+        "categoryID": "294",
+        "parentID": "304",
+        "categoryName": "main_part",
+        "categoryDescription": "The main part of a BigClown application (always needed).",
+        "categoryDescription": "",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "NAME",
+            "ParameterName": "Name",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "Name Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      }
+    ]
+}
