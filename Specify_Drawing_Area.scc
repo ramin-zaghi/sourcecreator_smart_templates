@@ -1,0 +1,5 @@
+/*< main_loop_init >*/
+/* specify the drawing area where everything is displayed on the window */
+glViewport(/*<@drawing_area_left/>*/, /*<@drawing_area_top/>*/, /*<@drawing_area_width/>*/, /*<@drawing_area_height/>*/);
+
+/*</main_loop_init >*/

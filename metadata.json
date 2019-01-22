@@ -5,8 +5,7 @@
         "categoryID": "294",
         "parentID": "304",
         "categoryName": "main_part",
-        "categoryDescription": "The main part of a BigClown application (always needed).",
-        "categoryDescription": "",
+        "categoryDescription": "The main part of an OpenGL application (always needed).",
         "parameters": [
           {
             "ParameterID": "ID",
@@ -22,6 +21,102 @@
             "ParameterDefultValue": "",
             "ParameterValue": "",
             "ParameterDescription": "Name Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "294",
+        "parentID": "304",
+        "categoryName": "Initialise_OpenGL",
+        "categoryDescription": "This initilises the OpenGL subsystem and a GLFW/GLEW window.",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "294",
+        "parentID": "304",
+        "categoryName": "Main_Loop",
+        "categoryDescription": "Loop and keep the GLFW/GLEW window alive.",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "294",
+        "parentID": "304",
+        "categoryName": "Specify_Drawing_Area",
+        "categoryDescription": "Specify the OpenGL Viewport on the window.",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "drawing_area_left",
+            "ParameterName": "drawing_area_left",
+            "ParameterDefultValue": "0",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "drawing_area_top",
+            "ParameterName": "drawing_area_top",
+            "ParameterDefultValue": "0",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "drawing_area_width",
+            "ParameterName": "drawing_area_width",
+            "ParameterDefultValue": "640",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          },
+          {
+            "ParameterID": "drawing_area_height",
+            "ParameterName": "drawing_area_height",
+            "ParameterDefultValue": "480",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
+            "ParameterType": "TextBox"
+          }
+        ]
+      },
+      {
+        "categoryID": "294",
+        "parentID": "304",
+        "categoryName": "Clear_Drawing_Area",
+        "categoryDescription": "Clear the drawn content to preapre for new drawings.",
+        "parameters": [
+          {
+            "ParameterID": "ID",
+            "ParameterName": "ID",
+            "ParameterDefultValue": "",
+            "ParameterValue": "",
+            "ParameterDescription": "ID Description",
             "ParameterType": "TextBox"
           }
         ]

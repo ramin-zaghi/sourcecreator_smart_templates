@@ -1,0 +1,23 @@
+
+
+
+/*< main_before_end singleshot >*/
+while (!glfwWindowShouldClose(g_window)) { // Loop until the window is closed
+    /*< main_loop_init />*/
+    /*< main_loop_post_init />*/
+    /*< main_loop_body />*/
+    /*< main_loop_before_end />*/
+    /* update other events like input handling */
+    glfwPollEvents();
+    if (GLFW_PRESS == glfwGetKey(g_window, GLFW_KEY_ESCAPE)) {
+        glfwSetWindowShouldClose(g_window, 1);
+    }
+
+    /* put everything we've been drawing onto the display */
+    glfwSwapBuffers(g_window);
+
+    /*< main_loop_end />*/
+}
+
+/*</main_before_end >*/
+

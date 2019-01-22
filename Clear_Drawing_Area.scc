@@ -1,0 +1,5 @@
+/*< main_loop_init >*/
+/* wipe the drawing area clear */
+glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+/*</main_loop_init >*/

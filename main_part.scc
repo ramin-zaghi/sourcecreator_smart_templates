@@ -1,16 +1,315 @@
 /*< main_cpp local output="@{app_title}.c" >*//*
  * This source code was created using SOURCECREATOR(tm)
+ * It is based on OpenGL tutorials from http://antongerdelan.net/opengl/
  * Please visit http://sourceCREATOR.io
  * An online version can be found at http://developer.visualSilicon.com
+ * See the bottom of this file for further notes.
  */
-#include <application.h>
 
+#include "application.h"
+
+/*< main_declarations />*/
+
+int main() {
+    /*< main_init />*/
+    /*< main_post_init />*/
+    /*< main_body />*/
+    /*< main_before_end />*/
+    /*< main_end />*/
+    return 0; // We have this just in case code reaches this point without a return statement
+}
+
+//
+// HOW TO USE THIS?
+//
+// 1) Make sure you have the latest GPU drivers installed on your system
+// 2) Make sure your GPU and GPU drivers do support OpenGL 4.0+
+// 3) The following is an example of how to compile and link (on Linux):
+//
+// $ g++ -Wall -pedantic application.c -o application.exe -lGLEW -lglfw -lGL -lm
+//
+
+/******************************************************************************\
+| OpenGL 4 Example Code.                                                       |
+| Accompanies written series "Anton's OpenGL 4 Tutorials"                      |
+| Email: anton at antongerdelan dot net                                        |
+| First version 27 Jan 2014                                                    |
+| Copyright Dr Anton Gerdelan, Trinity College Dublin, Ireland.                |
+| See individual libraries for separate legal notices                          |
+\******************************************************************************/
 /*</ main_cpp >*/
 
 
 
-/*< main_h  local  output="@{app_title}.h" >*/#ifndef _/*< @ script code="return @app_title.ToUpper();" />*/_H
+/*< main_h  local  output="@{app_title}.h" >*//*
+ * This source code was created using SOURCECREATOR(tm)
+ * It is based on OpenGL tutorials from http://antongerdelan.net/opengl/
+ * Please visit http://sourceCREATOR.io
+ * An online version can be found at http://developer.visualSilicon.com
+ */
+
+/******************************************************************************\
+| OpenGL 4 Example Code.                                                       |
+| Accompanies written series "Anton's OpenGL 4 Tutorials"                      |
+| Email: anton at antongerdelan dot net                                        |
+| First version 27 Jan 2014                                                    |
+| Copyright Dr Anton Gerdelan, Trinity College Dublin, Ireland.                |
+| See individual libraries for separate legal notices                          |
+|*****************************************************************************|
+| This is just a file holding some commonly-used "utility" functions to keep  |
+| the main file a bit easier to read. You can might build up something like   |
+| this as learn more GL. Note that you don't need much code here to do good GL|
+| If you have a big object-oriented engine then maybe you can ask yourself if |
+| it is really making life easier.                                            |
+\*****************************************************************************/
+
+#ifndef _/*< @ script code="return @app_title.ToUpper();" />*/_H
 #define _/*< @ script code="return @app_title.ToUpper();" />*/_H
+
+#include <GL/glew.h>    /* include GLEW and new version of GL on Windows */
+#include <GLFW/glfw3.h> /* GLFW helper library */
+#include <stdarg.h>
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#define bool int
+#define true 1
+#define false 0
+
+#define MAX_SHADER_LENGTH 262144
+#define GL_LOG_FILE "gl.log"
+
+/* keep track of window size for things like the viewport and the mouse cursor */
+int g_gl_width = 640;
+int g_gl_height = 480;
+GLFWwindow *g_window = NULL;
+double previous_seconds; // for use in fps timer
+
+
+bool start_gl();
+
+bool restart_gl_log();
+
+bool gl_log(const char *message, ...);
+
+/* same as gl_log except also prints to stderr */
+bool gl_log_err(const char *message, ...);
+
+void glfw_error_callback(int error, const char *description);
+
+void log_gl_params();
+
+void _update_fps_counter(GLFWwindow *window);
+
+void glfw_framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
+void _print_shader_info_log(GLuint shader_index);
+void _print_programme_info_log(GLuint sp);
+bool is_valid(GLuint sp);
+
+/*--------------------------------LOG FUNCTIONS------------------------------*/
+bool restart_gl_log() {
+    time_t now;
+    char *date;
+    FILE *file = fopen(GL_LOG_FILE, "w");
+
+    if (!file) {
+        fprintf(stderr, "ERROR: could not open GL_LOG_FILE log file %s for writing\n", GL_LOG_FILE);
+        return false;
+    }
+    now = time(NULL);
+    date = ctime(&now);
+    fprintf(file, "GL_LOG_FILE log. local time %s\n", date);
+    fclose(file);
+    return true;
+}
+
+bool gl_log(const char *message, ...) {
+    va_list argptr;
+    FILE *file = fopen(GL_LOG_FILE, "a");
+    if (!file) {
+        fprintf(stderr, "ERROR: could not open GL_LOG_FILE %s file for appending\n", GL_LOG_FILE);
+        return false;
+    }
+    va_start(argptr, message);
+    vfprintf(file, message, argptr);
+    va_end(argptr);
+    fclose(file);
+    return true;
+}
+
+/* same as gl_log except also prints to stderr */
+bool gl_log_err(const char *message, ...) {
+    va_list argptr;
+    FILE *file = fopen(GL_LOG_FILE, "a");
+    if (!file) {
+        fprintf(stderr, "ERROR: could not open GL_LOG_FILE %s file for appending\n", GL_LOG_FILE);
+        return false;
+    }
+    va_start(argptr, message);
+    vfprintf(file, message, argptr);
+    va_end(argptr);
+    va_start(argptr, message);
+    vfprintf(stderr, message, argptr);
+    va_end(argptr);
+    fclose(file);
+    return true;
+}
+
+/*--------------------------------GLFW3 and GLEW-----------------------------*/
+bool start_gl() {
+    const GLubyte *renderer;
+    const GLubyte *version;
+
+    gl_log("starting GLFW %s", glfwGetVersionString());
+
+    glfwSetErrorCallback(glfw_error_callback);
+    if (!glfwInit()) {
+        fprintf(stderr, "ERROR: could not start GLFW3\n");
+        return false;
+    }
+
+/* We must specify 3.2 core if on Apple OS X -- other O/S can specify
+ anything here. I defined 'APPLE' in the makefile for OS X */
+#ifdef APPLE
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
+    /*GLFWmonitor* mon = glfwGetPrimaryMonitor ();
+    const GLFWvidmode* vmode = glfwGetVideoMode (mon);
+    g_window = glfwCreateWindow (
+            vmode->width, vmode->height, "Extended GL Init", mon, NULL
+    );*/
+
+    g_window = glfwCreateWindow(g_gl_width, g_gl_height, "Shaders", NULL, NULL);
+    if (!g_window) {
+        fprintf(stderr, "ERROR: could not open window with GLFW3\n");
+        glfwTerminate();
+        return false;
+    }
+    glfwSetFramebufferSizeCallback(g_window, glfw_framebuffer_size_callback);
+    glfwMakeContextCurrent(g_window);
+
+    glfwWindowHint(GLFW_SAMPLES, 4);
+
+    /* start GLEW extension handler */
+    glewExperimental = GL_TRUE;
+    glewInit();
+
+    /* get version info */
+    renderer = glGetString(GL_RENDERER); /* get renderer string */
+    version = glGetString(GL_VERSION);   /* version as a string */
+    printf("Renderer: %s\n", renderer);
+    printf("OpenGL version supported %s\n", version);
+    gl_log("renderer: %s\nversion: %s\n", renderer, version);
+
+    previous_seconds = glfwGetTime();
+
+    return true;
+}
+
+void glfw_error_callback(int error, const char *description) {
+    fputs(description, stderr);
+    gl_log_err("%s\n", description);
+}
+
+/* a call-back function */
+void glfw_framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+    g_gl_width = width;
+    g_gl_height = height;
+    printf("width %i height %i\n", width, height);
+    /* update any perspective matrices used here */
+}
+
+void _update_fps_counter(GLFWwindow *window) {
+    static int frame_count;
+    double current_seconds = glfwGetTime();
+    double elapsed_seconds = current_seconds - previous_seconds;
+
+    if (elapsed_seconds > 0.25) {
+        double fps;
+        char tmp[128];
+
+        previous_seconds = current_seconds;
+        fps = (double)frame_count / elapsed_seconds;
+        sprintf(tmp, "opengl @ fps: %.2f", fps);
+        glfwSetWindowTitle(window, tmp);
+        frame_count = 0;
+    }
+    frame_count++;
+}
+
+/*--------------------------------OTHER FUNCTIONS------------------------------*/
+const char *GL_type_to_string(GLenum type) {
+    switch (type) {
+    case GL_BOOL:
+        return "bool";
+    case GL_INT:
+        return "int";
+    case GL_FLOAT:
+        return "float";
+    case GL_FLOAT_VEC2:
+        return "vec2";
+    case GL_FLOAT_VEC3:
+        return "vec3";
+    case GL_FLOAT_VEC4:
+        return "vec4";
+    case GL_FLOAT_MAT2:
+        return "mat2";
+    case GL_FLOAT_MAT3:
+        return "mat3";
+    case GL_FLOAT_MAT4:
+        return "mat4";
+    case GL_SAMPLER_2D:
+        return "sampler2D";
+    case GL_SAMPLER_3D:
+        return "sampler3D";
+    case GL_SAMPLER_CUBE:
+        return "samplerCube";
+    case GL_SAMPLER_2D_SHADOW:
+        return "sampler2DShadow";
+    default:
+        break;
+    }
+    return "other";
+}
+
+/* print errors in shader compilation */
+void _print_shader_info_log( GLuint shader_index ) {
+	int max_length = 2048;
+	int actual_length = 0;
+	char log[2048];
+	glGetShaderInfoLog( shader_index, max_length, &actual_length, log );
+	printf( "shader info log for GL index %i:\n%s\n", shader_index, log );
+}
+
+/* print errors in shader linking */
+void _print_programme_info_log( GLuint sp ) {
+	int max_length = 2048;
+	int actual_length = 0;
+	char log[2048];
+	glGetProgramInfoLog( sp, max_length, &actual_length, log );
+	printf( "program info log for GL index %i:\n%s", sp, log );
+}
+
+/* validate shader */
+bool is_valid( GLuint sp ) {
+	int params = -1;
+
+	glValidateProgram( sp );
+	glGetProgramiv( sp, GL_VALIDATE_STATUS, &params );
+	printf( "program %i GL_VALIDATE_STATUS = %i\n", sp, params );
+	if ( GL_TRUE != params ) {
+		_print_programme_info_log( sp );
+		return false;
+	}
+	return true;
+}
+
 #endif // _/*< @ script code="return @app_title.ToUpper();" />*/_H
 /*</ main_h >*/
 

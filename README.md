@@ -2,7 +2,7 @@ Sample Smart Templates for SOURCE**CREATOR**™
 
 **What this is:**
 <br/>This is a set of sample "Smart Templates" that are used by the web version of sourceCREATOR.
-<br/>These were created using Hardwario BigClown's "Climate Monitor" sample code to demonstrate how one can break down a complete program into Smart Templates and use them with the web version of sourceCREATOR.
+<br/>These were created using "Anton's OpenGL 4 Tutorials" (http://antongerdelan.net/opengl/) to demonstrate how one can break down a complete program into Smart Templates and use them with the web version of sourceCREATOR.
 
 **How to use it:**
 <br/>You can create your own GitHub repositories of sourceCREATOR Smart Templates and test them as follows:

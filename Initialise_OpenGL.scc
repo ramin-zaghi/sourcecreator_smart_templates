@@ -1,0 +1,16 @@
+
+
+
+/*< main_init singleshot >*/
+restart_gl_log();
+start_gl();
+
+/*</main_init >*/
+
+
+
+/*< main_end singleshot >*/
+/* close GL context and any other GLFW resources */
+glfwTerminate();
+/*</main_end >*/
+
